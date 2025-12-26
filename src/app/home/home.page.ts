@@ -4,13 +4,18 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonList,
   IonItem,
   IonInput,
   IonButtons,
   IonButton,
   IonIcon
 } from '@ionic/angular/standalone';
+
+/*Importing icons. Standalone ionic application didn't give automatic loading of the
+ icons(purpose is the bundle size), because of that we must import them separately
+ */
+import {addIcons} from "ionicons";
+import { heart, heartOutline, settingsOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +24,16 @@ import {
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon],
 })
 export class HomePage {
-  constructor() {}
+  public isFavorite:boolean = false;
+  constructor() {
+    addIcons({heart, heartOutline, settingsOutline});
+  }
 
-  protected favorite() {
+  toggleFavorite() {
+      this.isFavorite = !this.isFavorite;
+  }
 
+  openSettings(){
+    console.log("Settings")
   }
 }

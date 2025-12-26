@@ -4,7 +4,12 @@
       G00473376
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
+      <ion-button (click)="toggleFavorite()">
+        <ion-icon slot="icon-only" [name]="isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
+      <ion-button (click)="openSettings()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
