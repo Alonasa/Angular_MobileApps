@@ -1,14 +1,14 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonInput,
-  IonButtons,
   IonButton,
-  IonIcon
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
 import {RouterLink, RouterModule} from '@angular/router';
 
@@ -17,7 +17,7 @@ import {RouterLink, RouterModule} from '@angular/router';
  only for the necessary icons
  */
 import {addIcons} from "ionicons";
-import { heart, heartOutline, settingsOutline } from 'ionicons/icons';
+import {heart, heartOutline, settingsOutline} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +28,10 @@ import { heart, heartOutline, settingsOutline } from 'ionicons/icons';
 
 export class HomePage {
   constructor() {
-    addIcons({heart, heartOutline, settingsOutline});
+    addIcons({
+      heart,
+      heartOutline,
+      settingsOutline
+    });
   }
 }

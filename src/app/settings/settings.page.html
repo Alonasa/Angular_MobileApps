@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title [routerLink]="['/home']">
-      Home
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
