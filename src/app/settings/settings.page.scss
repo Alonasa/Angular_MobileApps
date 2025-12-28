@@ -1,3 +1,5 @@
+@use "../../theme/variables" as *;
+
 #container {
   text-align: center;
 
@@ -24,4 +26,9 @@
 
 #container a {
   text-decoration: none;
+}
+
+.title {
+  text-transform: capitalize;
+  padding: $padding-zero;
 }

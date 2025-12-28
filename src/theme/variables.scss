@@ -1,2 +1,16 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+//mixins
+
+//reset indents
+@mixin reset-indents {
+  padding: 0;
+  margin: 0;
+}
+
+//paddings
+$padding-zero: 0;
+$padding-small: 10px;
+$padding-medium: 15px;
+$padding-large: 20px;

@@ -9,3 +9,16 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content class="ion-padding">
+    <h3 class="title">
+      Display recipe Measurements in:
+    </h3>
+    <!--    Added radio buttons https://ionicframework.com/docs/api/radio-->
+      <ion-radio-group [value]="unit" (ionChange)="onUnitChange($event)">
+        <ion-radio value="Metric">Metric</ion-radio>
+        <br/>
+        <ion-radio value="US">US</ion-radio>
+        <br/>
+      </ion-radio-group>
+</ion-content>
+
