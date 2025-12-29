@@ -2,7 +2,6 @@
 // https://ionicframework.com/docs/theming/
 
 //mixins
-
 //reset indents
 @mixin reset-indents {
   padding: 0;
@@ -14,3 +13,23 @@ $padding-zero: 0;
 $padding-small: 10px;
 $padding-medium: 15px;
 $padding-large: 20px;
+
+//colors
+$dark: #1E1B22;
+$light :	#E6E1F5;
+$dark-purple:	#6C56A3;
+$bg-contrast:	#8B5CF6;
+$light-purple: #CFC6E0;
+$bg-light:	#E9E6F2;
+$white:	#FFFFFF;
+
+
+/*Changing basic colors
+https://ionicframework.com/docs/theming/css-variables
+ */
+:root {
+  --ion-color-primary: #{$dark-purple};
+  --ion-background-color: #{$bg-light};
+
+  --ion-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
+}
