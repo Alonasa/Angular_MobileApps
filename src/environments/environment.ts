@@ -2,8 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {API_KEY} from "./environment.secret";
+
 export const environment = {
-  production: false
+  production: false,
+  spoonacularApiKey: API_KEY,
+  spoonacularBaseUrl: 'https://api.spoonacular.com/recipes/'
 };
 
 /*
