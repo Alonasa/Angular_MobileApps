@@ -1,0 +1,9 @@
+<ion-card>
+  <img [alt]="'Recipe of ' + title.toLowerCase()" [src]="image" />
+  <ion-card-header>
+    <ion-card-title>{{title}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-button [routerLink]="['/recipe', id]" ]>Details</ion-button>
+  </ion-card-content>
+</ion-card>
