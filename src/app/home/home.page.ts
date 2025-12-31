@@ -18,6 +18,8 @@ import {RouterLink, RouterModule} from '@angular/router';
  */
 import {addIcons} from "ionicons";
 import {heart, heartOutline, settingsOutline} from 'ionicons/icons';
+import {SpoonacularService} from "../spoonacular";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -27,11 +29,23 @@ import {heart, heartOutline, settingsOutline} from 'ionicons/icons';
 })
 
 export class HomePage {
-  constructor() {
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(private spoonacular: SpoonacularService) {
     addIcons({
       heart,
       heartOutline,
       settingsOutline
     });
+  }
+
+  async getRecipesData(){
+    const ingredients = ['carrot', 'onion'];
+    try{
+     const recipes = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(ingredients));
+            console.log(recipes)
+    } catch (e) {
+      console.error("Error")
+    }
+
   }
 }

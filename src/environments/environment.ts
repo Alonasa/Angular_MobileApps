@@ -4,7 +4,13 @@
 
 import {API_KEY} from "./environment.secret";
 
-export const environment = {
+export interface environmentType {
+  production: boolean;
+  spoonacularApiKey: string;
+  spoonacularBaseUrl: string
+}
+
+export const environment:environmentType = {
   production: false,
   spoonacularApiKey: API_KEY,
   spoonacularBaseUrl: 'https://api.spoonacular.com/recipes/'
