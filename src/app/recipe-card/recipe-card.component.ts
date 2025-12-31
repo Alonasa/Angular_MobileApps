@@ -10,6 +10,8 @@ import {RouterLink} from "@angular/router";
   styleUrls: ['./recipe-card.component.scss'],
   imports: [IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, RouterLink]
 })
+
+
 export class RecipeCardComponent {
   @Input() id: number = 0;
   @Input() title: string = "No products";

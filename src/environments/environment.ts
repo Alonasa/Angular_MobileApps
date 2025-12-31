@@ -13,7 +13,7 @@ export interface environmentType {
 export const environment:environmentType = {
   production: false,
   spoonacularApiKey: API_KEY,
-  spoonacularBaseUrl: 'https://api.spoonacular.com/recipes/'
+  spoonacularBaseUrl: 'https://api.spoonacular.com/recipes/complexSearch'
 };
 
 /*
