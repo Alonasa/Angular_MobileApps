@@ -14,18 +14,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
     <ion-toolbar>
       <ion-title size="large">
-          <ion-item lines="none">
-            <ion-input label="Enter Ingredients" placeholder="Ingredients"></ion-input>
-          </ion-item>
+        <ion-item lines="none">
+          <ion-input label="Enter Ingredients" placeholder="Ingredients"></ion-input>
+        </ion-item>
       </ion-title>
     </ion-toolbar>
     <ion-button expand="full" (click)="getRecipesData()">Search</ion-button>
+  </div>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    @for (recipe of recipes.results; track recipe.id) {
+      <app-recipe-card
+        [id]="recipe.id"
+        [title]="recipe.title"
+        [image]="recipe.image">
+      </app-recipe-card>
+    } @empty {
+      <p>Search for ingredients to see results.</p>
+    }
   </div>
 </ion-content>

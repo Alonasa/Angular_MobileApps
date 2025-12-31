@@ -18,17 +18,20 @@ import {RouterLink, RouterModule} from '@angular/router';
  */
 import {addIcons} from "ionicons";
 import {heart, heartOutline, settingsOutline} from 'ionicons/icons';
-import {SpoonacularService} from "../spoonacular";
+import {ApiByIngredient, SpoonacularService} from "../spoonacular";
 import {firstValueFrom} from "rxjs";
+import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon, RouterModule, RouterLink],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon, RouterModule, RouterLink, RecipeCardComponent],
 })
 
 export class HomePage {
+  recipes:ApiByIngredient = {results: []};
+
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private spoonacular: SpoonacularService) {
     addIcons({
@@ -41,8 +44,8 @@ export class HomePage {
   async getRecipesData(){
     const ingredients = ['carrot', 'onion'];
     try{
-     const recipes = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(ingredients));
-            console.log(recipes)
+     const res = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(ingredients));
+     this.recipes = res;
     } catch (e) {
       console.error("Error")
     }
