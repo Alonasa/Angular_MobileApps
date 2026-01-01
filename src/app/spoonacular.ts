@@ -3,8 +3,11 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../environments/environment";
 
-export interface ApiByIngredient {
-  results: RecipesByIngredients[]
+export interface ApiByIngredients {
+  results: RecipesByIngredients[];
+  offset: number;
+  number: number;
+  totalResults: number;
 }
 
 export interface RecipesByIngredients {
@@ -26,12 +29,12 @@ export class SpoonacularService {
   private baseUrl = environment.spoonacularBaseUrl;
   private apiKey = environment.spoonacularApiKey;
 
-  getRecipesWithIngredients(ingredients: string[]): Observable<ApiByIngredient>{
+  getRecipesWithIngredients(ingredients: string[]): Observable<ApiByIngredients>{
     const params = new HttpParams()
       .set('apiKey', this.apiKey)
       .set('includeIngredients', ingredients.join(','))
 
-    return this.http.get<ApiByIngredient>(
+    return this.http.get<ApiByIngredients>(
       `${this.baseUrl}`, {responseType:'json', params},
     );
   }

@@ -15,26 +15,48 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="ion-padding">
-    <ion-toolbar>
-      <ion-title size="large">
-        <ion-item lines="none">
-          <ion-input label="Enter Ingredients" placeholder="Comma separated"></ion-input>
-        </ion-item>
-      </ion-title>
-    </ion-toolbar>
-    <ion-button expand="full" (click)="getRecipesData()">Search</ion-button>
-  </div>
+  <ion-row class="ion-padding ion-align-items-center">
+    <ion-col size="12" size-md="9">
+      <ion-item lines="none">
+        <ion-input fill="outline" labelPlacement="floating" label="Enter Ingredients" placeholder="Comma separated"
+                   [(ngModel)]="ingredientsString"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12" size-md="3">
+      <div class="buttons-container">
+        <ion-button size="large" (click)="getRecipesData()" [disabled]="!ingredientsString.length">Search</ion-button>
+        @if (ingredientsString.length) {
+          <ion-button size="large" (click)="clearSearchField()">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        }
+      </div>
+    </ion-col>
+  </ion-row>
 
   <div id="container">
-    @for (recipe of recipes.results; track recipe.id) {
-      <app-recipe-card
-        [id]="recipe.id"
-        [title]="recipe.title"
-        [image]="recipe.image">
-      </app-recipe-card>
-    } @empty {
-      <p>Search for ingredients to see results.</p>
-    }
+    <ion-grid>
+      <ion-row>
+        @if (isSearched && recipes.totalResults) {
+          <ion-col size="12">
+            <p>We found <b>{{ recipes.totalResults }}</b> recipes</p>
+          </ion-col>
+        }
+        @for (recipe of recipes.results; track recipe.id) {
+          <ion-col size="12" size-md="6" size-lg="4">
+            <app-recipe-card
+              [id]="recipe.id"
+              [title]="recipe.title"
+              [image]="recipe.image">
+            </app-recipe-card>
+          </ion-col>
+        } @empty {
+          <ion-col size="12">
+            <p>{{ ingredientsString.length && isSearched ? "Wasn't able to find the recipes with this ingredients, please check input correctness" : "Search for ingredients to see results" }}</p>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+
   </div>
 </ion-content>
