@@ -22,7 +22,9 @@ import {SpoonacularService} from "../spoonacular";
 import {firstValueFrom} from "rxjs";
 import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
 import {FormsModule} from "@angular/forms";
-import {ApiByIngredients} from "../interfaces/searchByIngredients.interface";
+import {
+  ApiByIngredients, RecipesByIngredients
+} from "../interfaces/searchByIngredients.interface";
 import {InfiniteScrollCustomEvent, LoadingController} from "@ionic/angular";
 
 
@@ -53,8 +55,8 @@ export class HomePage {
   offset: number = 0;
   number: number = 10;
   hasMore: boolean = false;
-  recipesList: any = [];
-
+  recipesList: RecipesByIngredients[] = [];
+  isSameSearch: boolean = false;
 
   constructor() {
     addIcons({
@@ -66,8 +68,14 @@ export class HomePage {
   }
 
   async getRecipesData() {
+    if (this.searchComparator() && this.isSearched) {
+      return;
+    }
+
+    this.recipesList = [];
     this.offset = 0;
     this.buildArrayIngredients();
+
     try {
       const res = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(this.ingredients, this.number, this.offset));
 
@@ -85,7 +93,7 @@ export class HomePage {
         this.number = res.number;
         this.hasMore = res.totalResults > this.recipesList.length;
         await loading.dismiss();
-        console.log(res);
+        console.log(this.recipesList);
       }
     } catch (e) {
       console.error("Error");
@@ -98,6 +106,16 @@ export class HomePage {
 
   buildArrayIngredients() {
     this.ingredients = this.ingredientsString.split(',');
+  }
+
+  //Helper for optimisation spoonacular api requests
+  searchComparator(): boolean {
+    const newIngredients = this.ingredientsString.split(',').map(i => i.trim());
+
+    // Compare current ingredients with the new input
+    return this.ingredients.length === newIngredients.length &&
+      this.ingredients.every((val, index) => val === newIngredients[index]);
+
   }
 
   //loader made by analogy https://www.youtube.com/watch?v=y_vwf15eAD

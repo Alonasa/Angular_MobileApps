@@ -24,7 +24,7 @@
     </ion-col>
     <ion-col size="12" size-md="3">
       <div class="buttons-container">
-        <ion-button size="large" (click)="getRecipesData()" [disabled]="!ingredientsString.length">Search</ion-button>
+        <ion-button size="large" (click)="getRecipesData()" [disabled]="!ingredientsString.length || (searchComparator() && isSearched)">Search</ion-button>
         @if (ingredientsString.length) {
           <ion-button size="large" (click)="clearSearchField()">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
