@@ -3,6 +3,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonChip,
   IonCol,
@@ -21,6 +22,8 @@ import {SpoonacularService} from "../spoonacular";
 import {ApiRecipe} from "../interfaces/recipe.interface";
 import {
   fitnessOutline,
+  heart,
+  heartOutline,
   leafOutline,
   peopleOutline,
   restaurantOutline,
@@ -35,7 +38,7 @@ import {addIcons} from "ionicons";
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonButtons, RouterLink, IonGrid, IonRow, IonCol, NgOptimizedImage, IonChip, IonIcon, IonLabel]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonButtons, RouterLink, IonGrid, IonRow, IonCol, NgOptimizedImage, IonChip, IonIcon, IonLabel, IonButton]
 })
 
 
@@ -43,6 +46,7 @@ export class RecipePage implements OnInit {
   private route = inject(ActivatedRoute);
   private spoonacular = inject(SpoonacularService);
   recipe: ApiRecipe | undefined;
+  isFavorite: boolean = true;
 
   constructor() {
     addIcons({
@@ -51,13 +55,14 @@ export class RecipePage implements OnInit {
       leafOutline,
       waterOutline,
       fitnessOutline,
-      restaurantOutline
+      restaurantOutline,
+      heart,
+      heartOutline
     });
   }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-
     if (id) {
       try {
         this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
@@ -75,5 +80,9 @@ export class RecipePage implements OnInit {
     if (d.includes('gluten free')) return 'fitness-outline';
     // fallback icon
     return 'restaurant-outline';
+  }
+
+  toggleFavorite(isFavorite: boolean){
+    this.isFavorite = !isFavorite;
   }
 }
