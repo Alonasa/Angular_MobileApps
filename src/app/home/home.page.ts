@@ -14,17 +14,19 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 import {RouterLink, RouterModule} from '@angular/router';
+import {addIcons} from "ionicons";
+import {heart, heartOutline, settingsOutline, trashOutline} from 'ionicons/icons';
+import {SpoonacularService} from "../spoonacular";
+import {firstValueFrom} from "rxjs";
+import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
+import {FormsModule} from "@angular/forms";
+import {ApiByIngredients} from "../interfaces/searchByIngredients.interface";
+
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
  icons(purpose is the bundle size), because of that we must import them separately.
  only for the necessary icons
  */
-import {addIcons} from "ionicons";
-import {heart, heartOutline, settingsOutline, trashOutline} from 'ionicons/icons';
-import {ApiByIngredients, SpoonacularService} from "../spoonacular";
-import {firstValueFrom} from "rxjs";
-import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
-import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -67,15 +69,5 @@ export class HomePage {
 
   buildArrayIngredients(){
     this.ingredients = this.ingredientsString.split(',');
-  }
-
-  async openRecipe(id: number) {
-    try {
-      const res = await firstValueFrom(this.spoonacular.getRecipeById(id));
-      this.recipes = res;
-      console.log(res);
-    } catch (e) {
-      console.error("Error");
-    }
   }
 }

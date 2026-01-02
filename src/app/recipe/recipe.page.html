@@ -1,13 +1,73 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>recipe</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+@if (recipe) {
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">recipe</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button [routerLink]="['/home']"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ recipe.title }} Recipe</ion-title>
     </ion-toolbar>
   </ion-header>
-</ion-content>
+
+  <ion-content [fullscreen]="true">
+    <ion-row class="ion-padding ion-align-items-center">
+      <div class="recipe-wrapper">
+          <div class="recipe-meta-overlay">
+            <img ngSrc="{{recipe.image}}" alt="Photo of tasty {{recipe.title}}" width="556" height="370">
+           <h1>{{recipe.title}}</h1>
+            <div>
+              <ion-chip color="tertiary">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>{{ recipe.readyInMinutes }} mins</ion-label>
+              </ion-chip>
+              <ion-chip color="tertiary">
+                <ion-icon name="people-outline"></ion-icon>
+                <ion-label>{{ recipe.servings }} servings</ion-label>
+              </ion-chip>
+              <div>
+                @if (recipe.diets) {
+                  <span>Diet: </span>
+                  @for (diet of recipe.diets; track $index){
+                    <ion-chip color="tertiary">
+                      <ion-icon name="time-outline"></ion-icon>
+                      <ion-label>{{ diet }}</ion-label>
+                    </ion-chip>
+                  }
+                }
+              </div>
+            </div>
+            <h2>Ingredients:</h2>
+          </div>
+        <ion-row>
+            @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
+            <ion-col size="12" size-md="6" size-lg="4">
+              <h3>{{ ingredient.original }}</h3>
+              <img ngSrc="https://img.spoonacular.com/ingredients_250x250/{{ingredient.image}}" width="250"
+                   height="250">
+            </ion-col>
+          }
+          <h2><b>Instructions:</b></h2>
+          <div class="steps-list" [innerHTML]="getSafeHtml(recipe.instructions)"></div>
+        </ion-row>
+      </div>
+    </ion-row>
+  </ion-content>
+} @else {
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button [routerLink]="['/home']"></ion-back-button>
+      </ion-buttons>
+      <ion-title>No content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <h1>Sorry something went wrong</h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+}
