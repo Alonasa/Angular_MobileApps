@@ -42,7 +42,7 @@
             <p>We found <b>{{ recipes.totalResults }}</b> recipes</p>
           </ion-col>
         }
-        @for (recipe of recipes.results; track recipe.id) {
+        @for (recipe of recipesList; track recipe.id) {
           <ion-col size="12" size-md="6" size-lg="4">
             <app-recipe-card
               [id]="recipe.id"
@@ -57,6 +57,12 @@
         }
       </ion-row>
     </ion-grid>
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore" >
+      <ion-infinite-scroll-content
+        loading-spinner="bubbles"
+        loading-text="Loading more recipes..."
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
   </div>
 </ion-content>

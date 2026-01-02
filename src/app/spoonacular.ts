@@ -13,7 +13,9 @@ import {ApiByIngredients} from "./interfaces/searchByIngredients.interface";
 export class SpoonacularService {
   private http = inject(HttpClient);
 
-  constructor() {}
+  constructor() {
+  }
+
   private baseUrl = environment.spoonacularBaseUrl;
   private apiKey = environment.spoonacularApiKey;
 
@@ -21,9 +23,11 @@ export class SpoonacularService {
     return new HttpParams().set('apiKey', this.apiKey);
   }
 
-  getRecipesWithIngredients(ingredients: string[]): Observable<ApiByIngredients> {
+  getRecipesWithIngredients(ingredients: string[], number: number, offset: number): Observable<ApiByIngredients> {
     const params = this.setBaseParams()
                        .set('includeIngredients', ingredients.join(','))
+                       .set('number', number.toString())
+                       .set('offset', offset.toString());
 
     return this.http.get<ApiByIngredients>(`${this.baseUrl}/complexSearch`, {
       responseType: 'json',
@@ -38,7 +42,7 @@ export class SpoonacularService {
     return this.http.get<ApiRecipe>(`${this.baseUrl}/${id}/information`, {
       responseType: 'json',
       params
-    },)
+    },);
   }
 
 }

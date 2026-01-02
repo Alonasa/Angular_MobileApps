@@ -41,7 +41,7 @@
           <ion-row class="ion-justify-content-center ion-align-items-end">
             @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
               <ion-col size="6" size-md="4" size-lg="3">
-                <h5>{{ ingredient.original }}</h5>
+                <h5>{{ ingredient.original.charAt(0).toUpperCase() + ingredient.original.slice(1) }}</h5>
                 <img [ngSrc]="ingredient.image ? 'https://img.spoonacular.com/ingredients_100x100/' + ingredient.image : 'assets/no_product.png'" width="100"
                      height="100">
               </ion-col>

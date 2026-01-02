@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -7,6 +7,8 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonInput,
   IonItem,
   IonRow,
@@ -21,6 +23,7 @@ import {firstValueFrom} from "rxjs";
 import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
 import {FormsModule} from "@angular/forms";
 import {ApiByIngredients} from "../interfaces/searchByIngredients.interface";
+import {InfiniteScrollCustomEvent} from "@ionic/angular";
 
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
@@ -32,17 +35,27 @@ import {ApiByIngredients} from "../interfaces/searchByIngredients.interface";
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon, RouterModule, RouterLink, RecipeCardComponent, FormsModule, IonGrid, IonRow, IonCol],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon, RouterModule, RouterLink, RecipeCardComponent, FormsModule, IonGrid, IonRow, IonCol, IonInfiniteScroll, IonInfiniteScrollContent],
 })
 
 export class HomePage {
-  recipes: ApiByIngredients = {results: [], offset: 0, number: 0, totalResults: 0};
+  private spoonacular = inject(SpoonacularService);
+  recipes: ApiByIngredients = {
+    results: [],
+    offset: 0,
+    number: 0,
+    totalResults: 0
+  };
   ingredientsString: string = '';
   isSearched: boolean = false;
   private ingredients: string[] = [];
+  offset: number = 0;
+  number: number = 10;
+  hasMore: boolean = false;
+  recipesList: any = [];
 
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private spoonacular: SpoonacularService) {
+
+  constructor() {
     addIcons({
       heart,
       heartOutline,
@@ -52,22 +65,51 @@ export class HomePage {
   }
 
   async getRecipesData() {
-    this.buildArrayIngredients()
+    this.offset = 0;
+    this.buildArrayIngredients();
     try {
-      const res = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(this.ingredients));
+      const res = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(this.ingredients, this.number, this.offset));
+      this.recipesList.push(...res.results);
       this.recipes = res;
       this.isSearched = true;
+      this.number = res.number;
+      this.hasMore = res.totalResults > this.recipesList.length;
+
       console.log(res);
     } catch (e) {
       console.error("Error");
     }
   }
 
-  clearSearchField(){
+  clearSearchField() {
     this.ingredientsString = '';
   }
 
-  buildArrayIngredients(){
+  buildArrayIngredients() {
     this.ingredients = this.ingredientsString.split(',');
+  }
+
+  //loader made by analogy https://www.youtube.com/watch?v=y_vwf15eAD
+  async loadMore(event: InfiniteScrollCustomEvent) {
+    this.offset += this.number;
+
+    if (!this.hasMore) {
+      return;
+    }
+
+    this.spoonacular
+        .getRecipesWithIngredients(this.ingredients, this.number, this.offset)
+        .subscribe({
+          next: (res) => {
+            this.recipesList.push(...res.results);
+            this.hasMore = (
+              this.offset + this.number
+            ) < res.totalResults;
+            event.target.complete();
+          },
+          error: (err) => {
+            event.target.complete();
+          }
+        });
   }
 }
