@@ -19,9 +19,13 @@ import {firstValueFrom} from "rxjs";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {SpoonacularService} from "../spoonacular";
 import {ApiRecipe} from "../interfaces/recipe.interface";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {
-  heart, heartOutline, peopleOutline, settingsOutline, timeOutline, trashOutline,
+  fitnessOutline,
+  leafOutline,
+  peopleOutline,
+  restaurantOutline,
+  timeOutline,
+  waterOutline,
 } from 'ionicons/icons';
 import {addIcons} from "ionicons";
 
@@ -35,7 +39,6 @@ import {addIcons} from "ionicons";
 })
 
 
-
 export class RecipePage implements OnInit {
   private route = inject(ActivatedRoute);
   private spoonacular = inject(SpoonacularService);
@@ -45,6 +48,10 @@ export class RecipePage implements OnInit {
     addIcons({
       timeOutline,
       peopleOutline,
+      leafOutline,
+      waterOutline,
+      fitnessOutline,
+      restaurantOutline
     });
   }
 
@@ -61,11 +68,12 @@ export class RecipePage implements OnInit {
     }
   }
 
-
-  //Safe html from the spoonacular
-  private sanitizer = inject(DomSanitizer);
-
-  getSafeHtml(html: string | null): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(html ?? '');
+  getDietIcon(diet: string): string {
+    const d = diet.toLowerCase();
+    if (d.includes('vegan') || d.includes('vegetarian')) return 'leaf-outline';
+    if (d.includes('dairy free')) return 'water-outline';
+    if (d.includes('gluten free')) return 'fitness-outline';
+    // fallback icon
+    return 'restaurant-outline';
   }
 }

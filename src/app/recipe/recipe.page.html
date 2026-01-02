@@ -23,31 +23,39 @@
                 <ion-icon name="people-outline"></ion-icon>
                 <ion-label>{{ recipe.servings }} servings</ion-label>
               </ion-chip>
-              <div>
+              <div class="diet-preferences">
                 @if (recipe.diets) {
                   <span>Diet: </span>
                   @for (diet of recipe.diets; track $index){
                     <ion-chip color="tertiary">
-                      <ion-icon name="time-outline"></ion-icon>
+                      <ion-icon [name]="getDietIcon(diet)"></ion-icon>
                       <ion-label>{{ diet }}</ion-label>
                     </ion-chip>
                   }
                 }
               </div>
             </div>
-            <h2>Ingredients:</h2>
           </div>
-        <ion-row>
+          <div>
+            <h2>Ingredients:</h2>
+            <ion-row class="ion-justify-content-center ion-align-items-end">
             @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
-            <ion-col size="12" size-md="6" size-lg="4">
-              <h3>{{ ingredient.original }}</h3>
-              <img ngSrc="https://img.spoonacular.com/ingredients_250x250/{{ingredient.image}}" width="250"
-                   height="250">
-            </ion-col>
-          }
-          <h2><b>Instructions:</b></h2>
-          <div class="steps-list" [innerHTML]="getSafeHtml(recipe.instructions)"></div>
-        </ion-row>
+              <ion-col size="6" size-md="4" size-lg="3">
+                <h5>{{ ingredient.original }}</h5>
+                <img ngSrc="https://img.spoonacular.com/ingredients_100x100/{{ingredient.image}}" width="100"
+                     height="100">
+              </ion-col>
+            }
+            </ion-row>
+            <div class="steps-container">
+              <h2><b>Instructions:</b></h2>
+              <ol>
+                @for (step of recipe.analyzedInstructions[0].steps; track $index) {
+                  <li>{{step.step}}</li>
+                }
+              </ol>
+            </div>
+          </div>
       </div>
     </ion-row>
   </ion-content>
