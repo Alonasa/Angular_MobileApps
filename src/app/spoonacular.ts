@@ -1,21 +1,9 @@
-import {inject, Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ApiRecipe} from "./interfaces/recipe.interface";
 import {environment} from "../environments/environment";
-
-export interface ApiByIngredients {
-  results: RecipesByIngredients[];
-  offset: number;
-  number: number;
-  totalResults: number;
-}
-
-export interface RecipesByIngredients {
-  id: number;
-  title: string;
-  image: string;
-  imageType: 'jpg' | 'png' | 'gif' | string;
-}
+import {ApiByIngredients} from "./interfaces/searchByIngredients.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +17,28 @@ export class SpoonacularService {
   private baseUrl = environment.spoonacularBaseUrl;
   private apiKey = environment.spoonacularApiKey;
 
-  getRecipesWithIngredients(ingredients: string[]): Observable<ApiByIngredients>{
-    const params = new HttpParams()
-      .set('apiKey', this.apiKey)
-      .set('includeIngredients', ingredients.join(','))
+  setBaseParams() {
+    return new HttpParams().set('apiKey', this.apiKey);
+  }
 
-    return this.http.get<ApiByIngredients>(
-      `${this.baseUrl}`, {responseType:'json', params},
-    );
+  getRecipesWithIngredients(ingredients: string[]): Observable<ApiByIngredients> {
+    const params = this.setBaseParams()
+                       .set('includeIngredients', ingredients.join(','))
+
+    return this.http.get<ApiByIngredients>(`${this.baseUrl}/complexSearch`, {
+      responseType: 'json',
+      params
+    },);
+  }
+
+  //get recipe apirequest https://spoonacular.com/food-api/docs#Get-Recipe-Information
+  getRecipeById(id: number): Observable<ApiRecipe> {
+    const params = this.setBaseParams();
+
+    return this.http.get<ApiRecipe>(`${this.baseUrl}/${id}/information`, {
+      responseType: 'json',
+      params
+    },)
   }
 
 }

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {firstValueFrom} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {SpoonacularService} from "../spoonacular";
 
 @Component({
   selector: 'app-recipe',
@@ -11,10 +14,21 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class RecipePage implements OnInit {
+  private route = inject(ActivatedRoute);
+  private spoonacular = inject(SpoonacularService);
+  recipe: any;
 
-  constructor() { }
+  async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
 
-  ngOnInit() {
+    if (id) {
+      try {
+        this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
+        console.log('Recipe Details:', this.recipe);
+      } catch (e) {
+        console.error('Error fetching recipe details', e);
+      }
+    }
   }
 
 }

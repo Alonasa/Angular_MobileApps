@@ -59,7 +59,6 @@ export class HomePage {
     } catch (e) {
       console.error("Error");
     }
-
   }
 
   clearSearchField(){
@@ -68,5 +67,15 @@ export class HomePage {
 
   buildArrayIngredients(){
     this.ingredients = this.ingredientsString.split(',');
+  }
+
+  async openRecipe(id: number) {
+    try {
+      const res = await firstValueFrom(this.spoonacular.getRecipeById(id));
+      this.recipes = res;
+      console.log(res);
+    } catch (e) {
+      console.error("Error");
+    }
   }
 }

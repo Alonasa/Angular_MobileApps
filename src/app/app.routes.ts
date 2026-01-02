@@ -13,12 +13,13 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-  },  {
+  },
+  {
     path: 'favorites',
     loadComponent: () => import('./favorites/favorites.page').then( m => m.FavoritesPage)
   },
   {
-    path: 'recipe',
+    path: 'recipe/:id',
     loadComponent: () => import('./recipe/recipe.page').then( m => m.RecipePage)
   },
 
