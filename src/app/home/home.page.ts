@@ -23,7 +23,7 @@ import {firstValueFrom} from "rxjs";
 import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
 import {FormsModule} from "@angular/forms";
 import {ApiByIngredients} from "../interfaces/searchByIngredients.interface";
-import {InfiniteScrollCustomEvent} from "@ionic/angular";
+import {InfiniteScrollCustomEvent, LoadingController} from "@ionic/angular";
 
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
@@ -40,6 +40,7 @@ import {InfiniteScrollCustomEvent} from "@ionic/angular";
 
 export class HomePage {
   private spoonacular = inject(SpoonacularService);
+  private loadingCtrl = inject(LoadingController);
   recipes: ApiByIngredients = {
     results: [],
     offset: 0,
@@ -69,13 +70,23 @@ export class HomePage {
     this.buildArrayIngredients();
     try {
       const res = await firstValueFrom(this.spoonacular.getRecipesWithIngredients(this.ingredients, this.number, this.offset));
-      this.recipesList.push(...res.results);
-      this.recipes = res;
-      this.isSearched = true;
-      this.number = res.number;
-      this.hasMore = res.totalResults > this.recipesList.length;
 
-      console.log(res);
+      const loading = await this.loadingCtrl.create({
+        message: 'Loading...',
+        spinner: 'bubbles',
+      });
+
+      await loading.present()
+
+      if (res) {
+        this.recipesList.push(...res.results);
+        this.recipes = res;
+        this.isSearched = true;
+        this.number = res.number;
+        this.hasMore = res.totalResults > this.recipesList.length;
+        await loading.dismiss();
+        console.log(res);
+      }
     } catch (e) {
       console.error("Error");
     }
@@ -107,7 +118,7 @@ export class HomePage {
             ) < res.totalResults;
             event.target.complete();
           },
-          error: (err) => {
+          error: () => {
             event.target.complete();
           }
         });
