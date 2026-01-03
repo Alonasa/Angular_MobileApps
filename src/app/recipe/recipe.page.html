@@ -2,7 +2,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button [routerLink]="['/home']"></ion-back-button>
+        <ion-back-button defaultHref="/home" [routerLink]="['/home']"></ion-back-button>
       </ion-buttons>
       <ion-title>{{ recipe.title }} Recipe</ion-title>
     </ion-toolbar>
@@ -44,7 +44,7 @@
                 <ion-col size="6" size-md="4" size-lg="3">
                   <li class="recipe-wrapper">
                     <h5>
-                      {{ $index + 1 + ":" }}
+                      <b>{{ $index + 1 + "." }}</b>
                       @if (selectedUnit === "us") {
                         {{ ingredient.measures.us.amount }}
                         {{ ingredient.measures.us.unitShort }}
@@ -91,7 +91,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button [routerLink]="['/home']"></ion-back-button>
+        <ion-back-button defaultHref="/home" [routerLink]="['/home']"></ion-back-button>
       </ion-buttons>
       <ion-title>No content</ion-title>
     </ion-toolbar>
