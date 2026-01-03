@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpoonacularService } from './spoonacular';
+import { SpoonacularService } from './spoonacular.service';
 
 describe('Spoonacular', () => {
   let service: SpoonacularService;

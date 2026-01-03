@@ -37,16 +37,36 @@
           </div>
         </div>
         <div>
-          <h2>Ingredients:</h2>
-          <ion-row class="ion-justify-content-center ion-align-items-end">
-            @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
-              <ion-col size="6" size-md="4" size-lg="3">
-                <h5>{{ ingredient.original.charAt(0).toUpperCase() + ingredient.original.slice(1) }}</h5>
-                <img [ngSrc]="ingredient.image ? 'https://img.spoonacular.com/ingredients_100x100/' + ingredient.image : 'assets/no_product.png'" width="100"
-                     height="100">
-              </ion-col>
-            }
-          </ion-row>
+          <h2>Ingredients in {{selectedUnit.charAt(0).toUpperCase() + selectedUnit.slice(1)}}:</h2>
+          <ul class="ingredients-lis">
+            <ion-row class="ion-justify-content-center ion-align-items-end">
+              @for (ingredient of recipe.extendedIngredients; track ingredient.id; let i = $index) {
+                <ion-col size="6" size-md="4" size-lg="3">
+                  <li class="recipe-wrapper">
+                    <h5>
+                      {{ $index + 1 + ":" }}
+                      @if (selectedUnit === "us") {
+                        {{ ingredient.measures.us.amount }}
+                        {{ ingredient.measures.us.unitShort }}
+                        {{ ingredient.meta[0] ? ingredient.meta[0] : "" }}
+                        {{ ingredient.name }}
+                      } @else {
+                        {{ ingredient.measures.metric.amount }}
+                        {{ ingredient.measures.metric.unitShort }}
+                        {{ ingredient.meta[0]? ingredient.meta[0] : "" }}
+                        {{ ingredient.name }}
+                      }
+                    </h5>
+                  </li>
+                  <img
+                    [ngSrc]="ingredient.image ? 'https://img.spoonacular.com/ingredients_100x100/' + ingredient.image : 'assets/no_product.png'"
+                    width="100"
+                    height="100">
+                </ion-col>
+              }
+            </ion-row>
+
+          </ul>
           <div class="steps-container">
             <h2><b>Instructions:</b></h2>
             <ol>
@@ -60,7 +80,7 @@
                 Remove from favorites
               } @else {
                 Add to favorites
-                }
+              }
             </ion-button>
           </div>
         </div>

@@ -18,7 +18,6 @@ import {
 import {RouterLink, RouterModule} from '@angular/router';
 import {addIcons} from "ionicons";
 import {heart, heartOutline, settingsOutline, trashOutline} from 'ionicons/icons';
-import {SpoonacularService} from "../spoonacular";
 import {firstValueFrom} from "rxjs";
 import {RecipeCardComponent} from "../recipe-card/recipe-card.component";
 import {FormsModule} from "@angular/forms";
@@ -26,6 +25,7 @@ import {
   ApiByIngredients, RecipesByIngredients
 } from "../interfaces/searchByIngredients.interface";
 import {InfiniteScrollCustomEvent, LoadingController} from "@ionic/angular";
+import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
@@ -56,7 +56,6 @@ export class HomePage {
   number: number = 10;
   hasMore: boolean = false;
   recipesList: RecipesByIngredients[] = [];
-  isSameSearch: boolean = false;
 
   constructor() {
     addIcons({

@@ -18,7 +18,6 @@ import {
 } from '@ionic/angular/standalone';
 import {firstValueFrom} from "rxjs";
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {SpoonacularService} from "../spoonacular";
 import {ApiRecipe} from "../interfaces/recipe.interface";
 import {
   fitnessOutline,
@@ -31,6 +30,8 @@ import {
   waterOutline,
 } from 'ionicons/icons';
 import {addIcons} from "ionicons";
+import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
+import {StorageService} from "../services/storage/storage.service";
 
 
 @Component({
@@ -45,8 +46,10 @@ import {addIcons} from "ionicons";
 export class RecipePage implements OnInit {
   private route = inject(ActivatedRoute);
   private spoonacular = inject(SpoonacularService);
+  private mds = inject(StorageService);
   recipe: ApiRecipe | undefined;
   isFavorite: boolean = true;
+  selectedUnit: string = "";
 
   constructor() {
     addIcons({
@@ -61,17 +64,7 @@ export class RecipePage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      try {
-        this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
-        console.log('Recipe Details:', this.recipe);
-      } catch (e) {
-        console.error('Error fetching recipe details', e);
-      }
-    }
-  }
+  // ingredient.original.charAt(0).toUpperCase() + ingredient.original.slice(1)
 
   getDietIcon(diet: string): string {
     const d = diet.toLowerCase();
@@ -84,5 +77,19 @@ export class RecipePage implements OnInit {
 
   toggleFavorite(isFavorite: boolean){
     this.isFavorite = !isFavorite;
+  }
+
+  async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.selectedUnit =  await this.mds.get("unit");
+
+    if (id) {
+      try {
+        this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
+        console.log('Recipe Details:', this.recipe);
+      } catch (e) {
+        console.error('Error fetching recipe details', e);
+      }
+    }
   }
 }

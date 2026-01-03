@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ApiRecipe} from "./interfaces/recipe.interface";
-import {environment} from "../environments/environment";
-import {ApiByIngredients} from "./interfaces/searchByIngredients.interface";
+import {environment} from "../../../environments/environment";
+import {ApiByIngredients} from "../../interfaces/searchByIngredients.interface";
+import {ApiRecipe} from "../../interfaces/recipe.interface";
 
 @Injectable({
   providedIn: 'root',
