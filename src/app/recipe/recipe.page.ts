@@ -33,6 +33,7 @@ import {
 import {addIcons} from "ionicons";
 import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 import {StorageService} from "../services/storage/storage.service";
+import {RecipesByIngredients} from "../interfaces/searchByIngredients.interface";
 
 
 @Component({
@@ -49,7 +50,7 @@ export class RecipePage implements OnInit {
   private spoonacular = inject(SpoonacularService);
   private mds = inject(StorageService);
   recipe: ApiRecipe | undefined;
-  isFavorite: boolean = true;
+  isFavorite: boolean = false;
   selectedUnit: string = "";
   isLoading:boolean = true;
 
@@ -66,7 +67,6 @@ export class RecipePage implements OnInit {
     });
   }
 
-  // ingredient.original.charAt(0).toUpperCase() + ingredient.original.slice(1)
 
   getDietIcon(diet: string): string {
     const d = diet.toLowerCase();
@@ -77,19 +77,43 @@ export class RecipePage implements OnInit {
     return 'restaurant-outline';
   }
 
-  toggleFavorite(isFavorite: boolean){
+  async toggleFavorite(isFavorite: boolean){
+    const value = await this.mds.get("favorites");
+    let favorites: RecipesByIngredients[] = value ? JSON.parse(value as string) : [];
+
+    if (this.isFavorite) {
+      favorites = favorites.filter((f: RecipesByIngredients) => f.id !== this.recipe?.id);
+    } else {
+      if (this.recipe) {
+        favorites.push({
+          id: this.recipe.id,
+          title: this.recipe.title,
+          image: this.recipe.image,
+          imageType: this.recipe.imageType
+        });
+      }
+    }
+
+    await this.mds.set("favorites", JSON.stringify(favorites));
     this.isFavorite = !isFavorite;
+  }
+
+
+  async setFavoriteStatus(id: string | null){
+    const favValue = await this.mds.get("favorites");
+    const favorites: RecipesByIngredients[] = favValue ? JSON.parse(favValue as string) : [];
+    this.isFavorite = favorites.some((f: any) => f.id === Number(id));
   }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.selectedUnit =  await this.mds.get("unit");
+    await this.setFavoriteStatus(id);
 
     if (id) {
       this.isLoading = true;
       try {
         this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
-        console.log('Recipe Details:', this.recipe);
       } catch (e) {
         console.error('Error fetching recipe details', e);
       }
