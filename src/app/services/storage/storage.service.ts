@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Storage} from "@ionic/storage-angular";
 
 type storageType = string | number | boolean;
@@ -8,14 +8,14 @@ type storageType = string | number | boolean;
 })
 
 export class StorageService {
-  private storage = inject(Storage);
 
-  constructor() {
+
+  constructor(private storage: Storage) {
     this.init();
   }
 
   async init() {
-    const storage = await this.storage.create();
+    this.storage = await this.storage.create();
   }
 
   async set(key: string, value: storageType) {
