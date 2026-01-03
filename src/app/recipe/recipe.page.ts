@@ -13,6 +13,7 @@ import {
   IonIcon,
   IonLabel,
   IonRow,
+  IonSkeletonText,
   IonTitle,
   IonToolbar
 } from '@ionic/angular/standalone';
@@ -39,7 +40,7 @@ import {StorageService} from "../services/storage/storage.service";
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonButtons, RouterLink, IonGrid, IonRow, IonCol, NgOptimizedImage, IonChip, IonIcon, IonLabel, IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonButtons, RouterLink, IonGrid, IonRow, IonCol, NgOptimizedImage, IonChip, IonIcon, IonLabel, IonButton, IonSkeletonText]
 })
 
 
@@ -50,6 +51,7 @@ export class RecipePage implements OnInit {
   recipe: ApiRecipe | undefined;
   isFavorite: boolean = true;
   selectedUnit: string = "";
+  isLoading:boolean = true;
 
   constructor() {
     addIcons({
@@ -84,11 +86,15 @@ export class RecipePage implements OnInit {
     this.selectedUnit =  await this.mds.get("unit");
 
     if (id) {
+      this.isLoading = true;
       try {
         this.recipe = await firstValueFrom(this.spoonacular.getRecipeById(Number(id)));
         console.log('Recipe Details:', this.recipe);
       } catch (e) {
         console.error('Error fetching recipe details', e);
+      }
+      finally {
+        this.isLoading = false;
       }
     }
   }
