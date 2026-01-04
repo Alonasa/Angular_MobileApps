@@ -10,19 +10,14 @@ import { StorageService } from '../services/storage/storage.service';
 
 import { addIcons } from 'ionicons';
 import { heartDislikeOutline } from 'ionicons/icons';
+import {AppHeaderComponent} from "../app-header/app-header.component";
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    RecipeCardComponent
-  ]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule, RecipeCardComponent, AppHeaderComponent]
 })
 export class FavoritesPage implements OnInit {
   favoriteRecipes = this.mds.get('favorites');

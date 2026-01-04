@@ -9,7 +9,7 @@ A cross-platform mobile app using the **Ionic Framework** and **Angular**, that 
 - **Enhanced User Experience** - "Skeleton Screens" have been included in addition to "Loading Controllers" to help produce smoother visual transitions while performing API calls.
 
 ## 🛠️Technical Stack
-- **Framework**: Ionic 7.2.1 / Angular 20.0
+- **Framework**: Ionic/Angular
 - **Language**: **TypeScript** (Strictly Typed especially on the API communication part)
 - **State & Persistence**: `@ionic/storage-angular` used for persistent data storage (e.g. Favorite Recipes and User App Settings).
 - **API Integration**: RESTful API integration using Angular's `HttpClient`.

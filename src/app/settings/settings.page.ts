@@ -7,19 +7,14 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StorageService} from "../services/storage/storage.service";
 import {CommonModule} from "@angular/common";
+import {AppHeaderComponent} from "../app-header/app-header.component";
 
 @Component({
   selector: 'app-settings',
   templateUrl: 'settings.page.html',
   styleUrls: ['settings.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule
-  ]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, AppHeaderComponent]
 })
 
 export class SettingsPage implements OnInit {
