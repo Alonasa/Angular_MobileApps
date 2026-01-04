@@ -1,13 +1,5 @@
 @if (recipe) {
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home" [routerLink]="['/home']"></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ recipe.title }} Recipe</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+  <app-header></app-header>
   <ion-content [fullscreen]="true">
     <ion-row class="ion-padding ion-align-items-center">
       <div class="recipe-wrapper">

@@ -1,10 +1,8 @@
-@use 'src/theme/variables.scss' as *;
-
 .product-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
   margin: 0;
-  background-color: $light-purple;
+  background-color: #CFC6E0FF;
 }

@@ -19,6 +19,8 @@ import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 import {StorageService} from "../services/storage/storage.service";
 import {RecipesByIngredients} from "../interfaces/searchByIngredients.interface";
 import {IonicModule} from "@ionic/angular";
+import {SettingIconsComponent} from "../setting-icons/setting-icons.component";
+import {AppHeaderComponent} from "../app-header/app-header.component";
 
 
 @Component({
@@ -26,12 +28,7 @@ import {IonicModule} from "@ionic/angular";
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule, SettingIconsComponent, AppHeaderComponent]
 })
 
 

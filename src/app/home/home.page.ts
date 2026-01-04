@@ -12,6 +12,8 @@ import {
 import {InfiniteScrollCustomEvent, IonicModule, LoadingController} from "@ionic/angular";
 import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 import {CommonModule} from "@angular/common";
+import {SettingIconsComponent} from "../setting-icons/setting-icons.component";
+import {AppHeaderComponent} from "../app-header/app-header.component";
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
  icons(purpose is the bundle size), because of that we must import them separately.
@@ -23,7 +25,7 @@ import {CommonModule} from "@angular/common";
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule, CommonModule, RouterModule, RouterLink, RecipeCardComponent, FormsModule],
+  imports: [IonicModule, CommonModule, RouterModule, RouterLink, RecipeCardComponent, FormsModule, SettingIconsComponent, AppHeaderComponent],
 })
 
 export class HomePage {

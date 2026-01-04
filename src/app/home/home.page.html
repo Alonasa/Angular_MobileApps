@@ -1,19 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      G00473376
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/favorites']">
-        <ion-icon slot="icon-only" [icon]="heart"></ion-icon>
-      </ion-button>
-      <ion-button [routerLink]="['/settings']">
-        <ion-icon slot="icon-only" [icon]="settingsOutline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content [fullscreen]="true">
   <ion-row class="ion-padding ion-align-items-center">
     <ion-col size="12" size-md="9">
@@ -36,8 +21,7 @@
     </ion-col>
   </ion-row>
 
-  <div id="container">
-    <ion-grid>
+    <ion-grid id="container">
       <ion-row class="ion-justify-content-center" >
         @if (isSearched && recipes.totalResults) {
           <ion-col size="12">
@@ -65,6 +49,4 @@
         loading-text="Loading more recipes..."
       ></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
-  </div>
 </ion-content>
