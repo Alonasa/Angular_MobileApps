@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
@@ -11,9 +11,7 @@ import {ApiRecipe} from "../../interfaces/recipe.interface";
 
 //made by example from https://ionicacademy.com/ionic-6-app-api-calls/
 export class SpoonacularService {
-  private http = inject(HttpClient);
-
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   private baseUrl = environment.spoonacularBaseUrl;

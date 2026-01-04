@@ -3,10 +3,10 @@ import {RouterLink} from "@angular/router";
 import {IonicModule} from "@ionic/angular";
 
 @Component({
+  standalone: true,
   selector: 'app-recipe-card',
   templateUrl: './recipe-card.component.html',
   styleUrls: ['./recipe-card.component.scss'],
-  standalone: true,
   imports: [IonicModule, RouterLink]
 })
 

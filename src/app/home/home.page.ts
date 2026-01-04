@@ -35,7 +35,7 @@ export class HomePage {
   };
   ingredientsString: string = '';
   isSearched: boolean = false;
-  private ingredients: string[] = [];
+  ingredients: string[] = [];
   offset: number = 0;
   number: number = 10;
   hasMore: boolean = false;
@@ -76,7 +76,6 @@ export class HomePage {
         this.number = res.number;
         this.hasMore = res.totalResults > this.recipesList.length;
         await loading.dismiss();
-        console.log(this.recipesList);
       }
     } catch (e) {
       console.error("Error");
@@ -125,4 +124,8 @@ export class HomePage {
           }
         });
   }
+
+  protected readonly heart = heart;
+  protected readonly settingsOutline = settingsOutline;
+  protected readonly trashOutline = trashOutline;
 }
