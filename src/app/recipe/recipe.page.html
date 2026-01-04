@@ -12,7 +12,7 @@
     <ion-row class="ion-padding ion-align-items-center">
       <div class="recipe-wrapper">
         <div class="recipe-meta-overlay">
-          <img ngSrc="{{recipe.image}}" alt="Photo of tasty {{recipe.title}}" width="556" height="370">
+          <img src="{{recipe.image}}" alt="Photo of tasty {{recipe.title}}" width="556" height="370">
           <h1>{{ recipe.title }}</h1>
           <div>
             <ion-chip color="tertiary">
@@ -59,7 +59,7 @@
                     </h5>
                   </li>
                   <img
-                    [ngSrc]="ingredient.image ? 'https://img.spoonacular.com/ingredients_100x100/' + ingredient.image : 'assets/no_product.png'"
+                    [src]="ingredient.image ? 'https://img.spoonacular.com/ingredients_100x100/' + ingredient.image : 'assets/no_product.png'"
                     width="100"
                     height="100">
                 </ion-col>

@@ -1,32 +1,31 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonRadio,
-  IonRadioGroup,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+  IonicModule, RadioGroupChangeEventDetail, RadioGroupCustomEvent,
+} from '@ionic/angular';
 
-import {RouterLink} from "@angular/router";
-import {RadioGroupChangeEventDetail, RadioGroupCustomEvent} from "@ionic/angular";
+import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StorageService} from "../services/storage/storage.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-settings',
   templateUrl: 'settings.page.html',
   styleUrls: ['settings.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, RouterLink, IonBackButton, IonButtons, IonContent, IonRadioGroup, IonRadio, ReactiveFormsModule, FormsModule],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule
+  ]
 })
 
 export class SettingsPage implements OnInit {
-  private mds = inject(StorageService);
   unit: string = 'metric';
 
-  constructor() {
+  constructor(private mds: StorageService) {
 
   }
 

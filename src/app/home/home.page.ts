@@ -1,20 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {
-  IonButton,
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonIcon,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonInput,
-  IonItem,
-  IonRow,
-  IonTitle,
-  IonToolbar
-} from '@ionic/angular/standalone';
+import {Component} from '@angular/core';
+
 import {RouterLink, RouterModule} from '@angular/router';
 import {addIcons} from "ionicons";
 import {heart, heartOutline, settingsOutline, trashOutline} from 'ionicons/icons';
@@ -24,9 +9,9 @@ import {FormsModule} from "@angular/forms";
 import {
   ApiByIngredients, RecipesByIngredients
 } from "../interfaces/searchByIngredients.interface";
-import {InfiniteScrollCustomEvent, LoadingController} from "@ionic/angular";
+import {InfiniteScrollCustomEvent, IonicModule, LoadingController} from "@ionic/angular";
 import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
-
+import {CommonModule} from "@angular/common";
 
 /*Importing icons. Standalone ionic application didn't give automatic loading of the
  icons(purpose is the bundle size), because of that we must import them separately.
@@ -35,14 +20,13 @@ import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButtons, IonButton, IonIcon, RouterModule, RouterLink, RecipeCardComponent, FormsModule, IonGrid, IonRow, IonCol, IonInfiniteScroll, IonInfiniteScrollContent],
+  imports: [IonicModule, CommonModule, RouterModule, RouterLink, RecipeCardComponent, FormsModule],
 })
 
 export class HomePage {
-  private spoonacular = inject(SpoonacularService);
-  private loadingCtrl = inject(LoadingController);
   recipes: ApiByIngredients = {
     results: [],
     offset: 0,
@@ -57,7 +41,7 @@ export class HomePage {
   hasMore: boolean = false;
   recipesList: RecipesByIngredients[] = [];
 
-  constructor() {
+  constructor(private spoonacular: SpoonacularService, private loadingCtrl: LoadingController) {
     addIcons({
       heart,
       heartOutline,
@@ -122,6 +106,7 @@ export class HomePage {
     this.offset += this.number;
 
     if (!this.hasMore) {
+      event.detail.complete();
       return;
     }
 

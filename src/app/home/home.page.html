@@ -57,7 +57,7 @@
         }
       </ion-row>
     </ion-grid>
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore" >
+    <ion-infinite-scroll (ionInfinite)="loadMore($any($event))" [disabled]="!hasMore">
       <ion-infinite-scroll-content
         loading-spinner="bubbles"
         loading-text="Loading more recipes..."

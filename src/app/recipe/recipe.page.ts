@@ -1,24 +1,8 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
-  IonChip,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonIcon,
-  IonLabel,
-  IonRow,
-  IonSkeletonText,
-  IonTitle,
-  IonToolbar
-} from '@ionic/angular/standalone';
 import {firstValueFrom} from "rxjs";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterModule} from "@angular/router";
 import {ApiRecipe} from "../interfaces/recipe.interface";
 import {
   fitnessOutline,
@@ -34,6 +18,7 @@ import {addIcons} from "ionicons";
 import {SpoonacularService} from "../services/spoonacular/spoonacular.service";
 import {StorageService} from "../services/storage/storage.service";
 import {RecipesByIngredients} from "../interfaces/searchByIngredients.interface";
+import {IonicModule} from "@ionic/angular";
 
 
 @Component({
@@ -41,20 +26,22 @@ import {RecipesByIngredients} from "../interfaces/searchByIngredients.interface"
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonButtons, RouterLink, IonGrid, IonRow, IonCol, NgOptimizedImage, IonChip, IonIcon, IonLabel, IonButton, IonSkeletonText]
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ]
 })
 
 
 export class RecipePage implements OnInit {
-  private route = inject(ActivatedRoute);
-  private spoonacular = inject(SpoonacularService);
-  private mds = inject(StorageService);
   recipe: ApiRecipe | undefined;
   isFavorite: boolean = false;
   selectedUnit: string = "";
   isLoading:boolean = true;
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private spoonacular: SpoonacularService, private mds: StorageService) {
     addIcons({
       timeOutline,
       peopleOutline,
