@@ -21,3 +21,8 @@ A cross-platform mobile app using the **Ionic Framework** and **Angular**, that 
 - `src/app/favorites`: Saved recipes management.
 - `src/app/settings`: User preference configuration (Units/Metrics).
 - `src/app/services`: Logic for API calls and Storage management.
+
+## 💨 Project Start
+- Clone repository
+- Install packages via **npm install**
+- Run the project via **ionic serve**
