@@ -1,19 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonButton
-} from '@ionic/angular/standalone';
+import {IonicModule} from "@ionic/angular";
+
 
 @Component({
   standalone: true,
   selector: 'app-recipe-card',
   templateUrl: 'recipe-card.component.html',
   styleUrls: ['recipe-card.component.scss'],
-  imports: [RouterLink, IonCardTitle, IonCardHeader, IonCard, IonCardContent, IonButton],
+  imports: [RouterLink, IonicModule],
 })
 
 

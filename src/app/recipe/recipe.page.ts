@@ -34,7 +34,7 @@ import {AppHeaderComponent} from "../app-header/app-header.component";
 export class RecipePage implements OnInit {
   recipe: ApiRecipe | undefined;
   isFavorite: boolean = false;
-  selectedUnit: string = "";
+  selectedUnit: string ="";
   isLoading:boolean = true;
 
   constructor(private route: ActivatedRoute, private spoonacular: SpoonacularService, private mds: StorageService) {
@@ -90,7 +90,13 @@ export class RecipePage implements OnInit {
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.selectedUnit =  await this.mds.get("unit");
+    const unit =  await this.mds.get("unit");
+    if (unit === 'us' || unit === 'metric') {
+      this.selectedUnit = unit;
+    } else {
+      this.selectedUnit = 'metric'; // fallback
+    }
+
     await this.setFavoriteStatus(id);
 
     if (id) {
